@@ -28,20 +28,19 @@ public class MovimentcaoService {
         movimentacao.setDate(LocalDateTime.now());
         movimentacao.setDescricao(novaMovimentacao.getDescricao());
         movimentacao.setIdConta(novaMovimentacao.getIdConta());
-        System.out.println(novaMovimentacao.getIdConta());
         movimentacao.setTipo(novaMovimentacao.getTipo());
         movimentacao.setValor(valor);
-
-
 
         corretistaRepository.findById(novaMovimentacao.getIdConta())
                 .ifPresent(corretista -> {
                     corretista
                             .getConta()
                             .setSaldo(corretista.getConta().getSaldo() + valor);
-                corretistaRepository.save(corretista);
+                corretistaRepository
+                            .save(corretista);
                 });
 
+        repository.save(movimentacao);
 
 }
 }
