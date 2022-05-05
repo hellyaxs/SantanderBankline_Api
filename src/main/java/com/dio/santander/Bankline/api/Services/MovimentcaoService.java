@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
 
 @Service
 public class MovimentcaoService {
@@ -43,4 +45,8 @@ public class MovimentcaoService {
         repository.save(movimentacao);
 
 }
+    public List<Movimentacao> findByIdConta(Long IdConta){
+        Iterable<Long> test = Collections.singleton(IdConta);
+        return repository.findByIdConta(IdConta);
+    }
 }

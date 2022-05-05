@@ -14,15 +14,12 @@ public class CorrentistaService {
     private CorretistaRepository repository;
 
     public void save(Corretista correntista){
-        Corretista novoCorrentista = new Corretista();
-        novoCorrentista.setNome(correntista.getNome());
-        novoCorrentista.setCfp(correntista.getCfp());
 
         Conta conta = new Conta();
         conta.setSaldo(0.0);
         conta.setNumero(new Date().getTime());
 
-        novoCorrentista.setConta(conta);
-        repository.save(novoCorrentista);
+        correntista.setConta(conta);
+        repository.save(correntista);
     }
 }

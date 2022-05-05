@@ -23,6 +23,11 @@ public class CorretistaController {
         return corretistaRepository.findAll();
     }
 
+    @GetMapping("/{idConta}")
+    public Corretista findByIdConta(@PathVariable Long idConta){
+        return corretistaRepository.findById(idConta).get();
+    }
+
     @PostMapping
     public void novoCorrentista(@RequestBody Corretista correntista){
         service.save(correntista);
