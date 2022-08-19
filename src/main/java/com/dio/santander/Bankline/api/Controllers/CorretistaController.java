@@ -12,20 +12,18 @@ import java.util.List;
 @RequestMapping("/correntista")
 public class CorretistaController {
 
-    @Autowired
-    private CorretistaRepository corretistaRepository;
 
     @Autowired
     private CorrentistaService service;
 
     @GetMapping
     public List<Corretista> coretista(){
-        return corretistaRepository.findAll();
+        return service.findAll();
     }
 
     @GetMapping("/{idConta}")
-    public Corretista findByIdConta(@PathVariable Long idConta){
-        return corretistaRepository.findById(idConta).get();
+    public Corretista findByIdConta(@PathVariable Long idConta) throws Throwable {
+        return service.findByIdConta(idConta);
     }
 
     @PostMapping

@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 @Embeddable
 @Data
@@ -16,5 +18,8 @@ public class Conta {
     private Long numero;
     @Column(name="conta_saldo")
     private Double saldo;
+
+    @Enumerated(EnumType.STRING)
+    private TipoConta tipoConta;
 
 }
