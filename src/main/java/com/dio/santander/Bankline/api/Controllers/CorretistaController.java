@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/correntista")
+@RequestMapping("user/correntista")
 public class CorretistaController {
 
 
@@ -17,7 +17,7 @@ public class CorretistaController {
     private CorrentistaService service;
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    //@PreAuthorize("hasAnyRole('ADMIN')")
     public List<Corretista> coretista(){
         return service.findAll();
     }
