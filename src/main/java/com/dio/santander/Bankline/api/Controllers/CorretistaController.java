@@ -3,6 +3,7 @@ package com.dio.santander.Bankline.api.Controllers;
 import com.dio.santander.Bankline.api.Entities.Corretista;
 import com.dio.santander.Bankline.api.Services.CorrentistaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class CorretistaController {
     private CorrentistaService service;
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public List<Corretista> coretista(){
         return service.findAll();
     }
