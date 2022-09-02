@@ -2,7 +2,6 @@ package com.dio.santander.Bankline.api.Controllers;
 
 import com.dio.santander.Bankline.api.Entities.Corretista;
 import com.dio.santander.Bankline.api.Services.CorrentistaService;
-import com.dio.santander.Bankline.api.repository.CorretistaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
