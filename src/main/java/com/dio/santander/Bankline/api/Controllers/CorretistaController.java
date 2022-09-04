@@ -3,13 +3,16 @@ package com.dio.santander.Bankline.api.Controllers;
 import com.dio.santander.Bankline.api.Entities.Corretista;
 import com.dio.santander.Bankline.api.Services.CorrentistaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("user/correntista")
+@RequestMapping("users/correntista")
 public class CorretistaController {
 
 
@@ -18,8 +21,10 @@ public class CorretistaController {
 
     @GetMapping
     //@PreAuthorize("hasAnyRole('ADMIN')")
-    public List<Corretista> coretista(){
-        return service.findAll();
+    public Page<Corretista> coretista(@RequestParam(defaultValue = "0") int page,
+                                       @RequestParam(defaultValue = "3") int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return service.findAll(pageable);
     }
 
     @GetMapping("/{idConta}")

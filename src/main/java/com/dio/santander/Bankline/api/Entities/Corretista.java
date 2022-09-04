@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name ="tab_corretista")
@@ -24,6 +25,17 @@ public class Corretista {
    @Column(length = 60)
    private String nome;
 
+   @Column(length = 60,nullable = false)
+   private String username;
+
+   @Column(length = 100,nullable = false)
+   private String password;
+
    @Embedded
    private Conta conta;
+
+   @ElementCollection(fetch = FetchType.EAGER)
+   @CollectionTable(name ="tab_suer_roles", joinColumns = @JoinColumn(name = "username"))
+   @Column(name = "role_id")
+   private List<String> roles;
 }

@@ -19,10 +19,16 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
+                .antMatchers("/h2/**").permitAll()
                 .antMatchers(HttpMethod.POST,"/login").permitAll()
                 .antMatchers("/users/**").hasAnyRole("USER") // localhost:8080/user precisa de autorização USER
                 .antMatchers("/admin/**").hasAnyRole("ADMIN")
                 .anyRequest().authenticated().and().formLogin();
+
+        // this will ignore only h2-console csrf, spring security 4+
+        http.csrf().ignoringAntMatchers("/h2/**");
+        //this will allow frames with same origin which is much more safe
+        http.headers().frameOptions().sameOrigin();
     }
 
     @Override
