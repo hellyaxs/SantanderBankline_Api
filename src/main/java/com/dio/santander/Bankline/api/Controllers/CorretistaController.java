@@ -22,7 +22,7 @@ public class CorretistaController {
     @GetMapping
     //@PreAuthorize("hasAnyRole('ADMIN')")
     public Page<Corretista> coretista(@RequestParam(defaultValue = "0") int page,
-                                       @RequestParam(defaultValue = "3") int size){
+                                      @RequestParam(defaultValue = "3") int size){
         Pageable pageable = PageRequest.of(page, size);
         return service.findAll(pageable);
     }

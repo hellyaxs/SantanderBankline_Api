@@ -11,6 +11,7 @@ import java.util.List;
 @Entity
 @Table(name ="tab_corretista")
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Corretista {
