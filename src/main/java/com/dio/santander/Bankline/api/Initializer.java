@@ -17,18 +17,16 @@ public class Initializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-       Optional<Corretista> corretista = corretistaRepository.findByUsername("admin");
+       //Optional<Corretista> corretista = corretistaRepository.findByUsername("admin");
 
 
-        corretistaRepository.save(Corretista.builder()
+        /*corretistaRepository.save(Corretista.builder()
                 .nome("Jãoa")
                 .cfp("129.34563.3874")
                 .username("admin")
                 .password("admin123")
                 .roles(new ArrayList<String>(){{add("ADMIN");}})
-                .build());
-
-
+                .build());*/
 
     }
 }

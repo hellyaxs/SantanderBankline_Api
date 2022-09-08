@@ -6,10 +6,12 @@ import com.dio.santander.Bankline.api.Entities.Movimentacao;
 import com.dio.santander.Bankline.api.Entities.TipoMovimentacao;
 import com.dio.santander.Bankline.api.repository.CorretistaRepository;
 import com.dio.santander.Bankline.api.repository.MovimentacaoRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Collections;
 import java.util.List;
 
@@ -23,15 +25,13 @@ public class MovimentcaoService {
     private CorretistaRepository corretistaRepository;
 
     public void save(MovimentacaoDTO novaMovimentacao){
-        Movimentacao movimentacao = new Movimentacao();
+        var movimentacao = new Movimentacao();
 
         Double valor = novaMovimentacao.getTipo() == TipoMovimentacao.RECEITA ? novaMovimentacao.getValor() : novaMovimentacao.getValor() * -1 ;
+        novaMovimentacao.setValor(valor);
+        BeanUtils.copyProperties(novaMovimentacao,movimentacao);
+        movimentacao.setDate(LocalDateTime.now(ZoneId.of("UTC")));
 
-        movimentacao.setDate(LocalDateTime.now());
-        movimentacao.setDescricao(novaMovimentacao.getDescricao());
-        movimentacao.setIdConta(novaMovimentacao.getIdConta());
-        movimentacao.setTipo(novaMovimentacao.getTipo());
-        movimentacao.setValor(valor);
 
         corretistaRepository.findById(novaMovimentacao.getIdConta())
                 .ifPresent(corretista -> {

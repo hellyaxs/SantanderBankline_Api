@@ -8,10 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/movimentacoes")
+@RequestMapping("users/movimentacoes")
 public class MovimentacaoController {
 
     @Autowired
@@ -32,7 +33,7 @@ public class MovimentacaoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void save(@RequestBody MovimentacaoDTO novaMovimentacao){
+    public void save(@RequestBody @Valid MovimentacaoDTO novaMovimentacao){
         movimentcaoService.save(novaMovimentacao);
     }
 }

@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("users/correntista")
@@ -36,5 +33,7 @@ public class CorretistaController {
     public void novoCorrentista(@RequestBody Corretista correntista){
         service.save(correntista);
     }
+
+
 
 }

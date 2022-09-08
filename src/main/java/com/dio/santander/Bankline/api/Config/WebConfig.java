@@ -36,6 +36,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
 
         // this will ignore only h2-console csrf, spring security 4+
         http.csrf().ignoringAntMatchers("/h2/**");
+        http.csrf().ignoringAntMatchers("/users/**");
         //this will allow frames with same origin which is much more safe
         http.headers().frameOptions().sameOrigin();
     }
