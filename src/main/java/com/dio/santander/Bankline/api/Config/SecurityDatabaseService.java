@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -30,11 +32,12 @@ public class SecurityDatabaseService implements UserDetailsService {
             entityCorrentista.get().getRoles().forEach(role -> {
                 authoritySet.add(new SimpleGrantedAuthority("ROLE_" + role));
             });
+            var BCryptPasswordEncoder = new BCryptPasswordEncoder();
+
             return new User(entityCorrentista.get().getUsername(),entityCorrentista.get().getPassword(), authoritySet);
         }else{
             throw new UsernameNotFoundException(username);
         }
-
 
 
 

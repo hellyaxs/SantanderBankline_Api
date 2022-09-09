@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
 //anotações necessarias
@@ -21,7 +22,8 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void globalUserDetals(AuthenticationManagerBuilder auth) throws Exception {
-       auth.userDetailsService(securityDatabaseService).passwordEncoder(NoOpPasswordEncoder.getInstance());
+       auth.userDetailsService(securityDatabaseService).passwordEncoder(new BCryptPasswordEncoder());
+       //NoOpPasswordEncoder.getInstance();-> sem usar criptografia
     }
     //mapeando rotas para diferentes roles
     @Override
