@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.*;
 import java.util.Date;
 import java.util.List;
 
@@ -42,6 +43,11 @@ public class CorrentistaService {
 
     public Corretista findByIdConta(Long id) throws CorrentistaException {
         return repository.findById(id).orElseThrow(() -> new CorrentistaException("NOT FOUND corretistas with id: " + id));
+    }
+
+    public Boolean ValideUser(String username,String password) {
+         repository.findByUsername(username);
+         return true;
     }
 
     @Transactional

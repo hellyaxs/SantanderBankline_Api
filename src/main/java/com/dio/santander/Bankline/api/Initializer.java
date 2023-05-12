@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Component
@@ -18,6 +20,7 @@ public class Initializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
        //Optional<Corretista> corretista = corretistaRepository.findByUsername("admin");
+
 
 
         /*corretistaRepository.save(Corretista.builder()

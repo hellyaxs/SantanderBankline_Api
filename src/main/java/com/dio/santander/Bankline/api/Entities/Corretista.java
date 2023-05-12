@@ -1,5 +1,6 @@
 package com.dio.santander.Bankline.api.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,6 +30,7 @@ public class Corretista {
    @Column(length = 60,nullable = false)
    private String username;
 
+   @JsonIgnore
    @Column(length = 100,nullable = false)
    private String password;
 
