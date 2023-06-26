@@ -9,6 +9,8 @@ import com.dio.santander.Bankline.api.Services.CorrentistaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -51,5 +53,13 @@ public class LoginController {
     @PostMapping("/logout")
     public String logout(){
         return "cadastro teste passou";
+    }
+
+    @GetMapping("/jwt")
+    public String jwt(@AuthenticationPrincipal Jwt user){
+        String email = user.getClaim("email");
+        String claim = user.getClaims().toString();
+        String token = user.getTokenValue();
+    return "email: "+email+"\n claim: "+claim+"\n token: "+token;
     }
 }
