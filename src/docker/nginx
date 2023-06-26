@@ -1,0 +1,28 @@
+Events{
+ worker_connections 1024;
+}
+
+http{
+
+  upstream  bankapi {
+    least_conn
+    server webApi_1:8080 weight=3;
+    server webApi_2:8080 weight=3;
+  }
+
+Server{
+  listen 80
+  server_name localhost
+
+  Location / {
+    proxy_pass http://bankapi
+  }
+
+  Location /correntista{
+    proxy_pass http://bankapi
+  }
+
+
+}
+
+}
