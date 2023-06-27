@@ -1,32 +1,57 @@
 version: '3'
 
 services:
-    db:
-        image: postgres:latest
-        restart: always
-        environment:
-          - POSTGRES_PASSWORD=postgres
-          - POSTGRES_USER=postgres
-          - POSTGRES_DB=postgres
-        ports:
-        - "5432:5432"
-        volumes:
-        - ./postgres-data:/var/lib/postgresql/data
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - /tmp/postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app_net
 
-    webApi_1:
-        build: .
-        ports:
-          - "8080:8080"
+  webapi_1:
+    build: .
+    ports:
+      - "8082:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      db:
+        condition: service_healthy
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: any
+    networks:
+      - app_net
 
-
-
-    webApi_2:
-      extends:
-        service: webApi_1
-
-    nginx:
-      image: nginx:latest
-      ports:
-        - "80:80"
-      volumes:
-        - ./nginx:/etc/nginx/nginx.conf
+#  webapi_2:
+#    ports:
+#      - "8085:8080"
+#    extends:
+#      service: webapi_1
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8000:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    networks:
+        - app_net
+networks:
+  app_net:
+    driver: bridge
