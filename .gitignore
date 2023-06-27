@@ -36,3 +36,5 @@ build/
 ### VS Code ###
 .vscode/
 .tool-versions
+
+/docker/Bankline.api.jar
