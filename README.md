@@ -24,30 +24,40 @@ Abaixo vou deixar as ferramentas e conhecimento adquiridos neste projeto:
 ![Apache Tomcat](https://img.shields.io/badge/apache%20tomcat-%23F8DC75.svg?style=for-the-badge&logo=apache-tomcat&logoColor=black)
 ![Webpack](https://img.shields.io/badge/webpack-%238DD6F9.svg?style=for-the-badge&logo=webpack&logoColor=black)
 ![RxJS](https://img.shields.io/badge/rxjs-%23B7178C.svg?style=for-the-badge&logo=reactivex&logoColor=white)
+![IntelliJ IDEA](https://img.shields.io/badge/IntelliJIDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white)
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)
 
 **SANTANDER DEV WEEK**
 
-## Como executar a aplicação
-
-## Deploy
-
-Para fazer o deploy desse projeto rode
-
-requistos para rodar o projeto:
+## requistos para rodar o projeto:
 
 - docker
 - docker-compose
+- java 11
 
+## Como executar a aplicação
+
+### Clone o repositório
+```bash
+  git clone https://github.com/hellyaxs/SantanderBankline_Api
+```
 
 ```bash
   docker-compose up -f ./docker --build  -d
 ```
+
 Acesse Front-end em: http://localhost:8001/
+
 Acesse API em: http://localhost:8000/
+
 
 ## Documentação da API
   
-
-
+    Acesse a documentação da API em: http://localhost:8000/swagger-ui.html
 
 Acesse o projeto front-end em: [front-end](https://github.com/hellyaxs/bankline-app)
+
+
+## Arquitetura do projeto
+![image](arquiterure.png)
