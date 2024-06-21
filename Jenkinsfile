@@ -1,20 +1,21 @@
 pipeline {
 
     agent any
-    stages{
-        stage('Build'){
-            steps{
-                echo 'Building the project'
-            }
+     triggers {
+            cron('H 3 * * *') // Build todos os dias às 3h da manhã
+            pollSCM('H/5 * * * *') // Verificar mudanças a cada 5 minutos
         }
+    stages{
         stage('Test'){
             steps{
                 echo 'Testing the project'
             }
         }
-        stage('Deploy'){
+        stage('Build image'){
             steps{
-                echo 'Deploying the project'
+                echo 'Building the project'
+                 sh 'docker-compose up -d'
+
             }
         }
     }
