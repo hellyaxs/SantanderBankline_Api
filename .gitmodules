@@ -1,0 +1,3 @@
+[submodule "bankline-app"]
+	path = bankline-app
+	url = https://github.com/hellyaxs/bankline-app.git
