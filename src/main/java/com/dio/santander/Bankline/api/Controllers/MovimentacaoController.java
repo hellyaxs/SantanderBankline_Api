@@ -4,11 +4,12 @@ import com.dio.santander.Bankline.api.DTO.MovimentacaoDTO;
 import com.dio.santander.Bankline.api.Entities.Movimentacao;
 import com.dio.santander.Bankline.api.Services.MovimentcaoService;
 import com.dio.santander.Bankline.api.repository.MovimentacaoRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+
 import java.util.List;
 
 @RestController

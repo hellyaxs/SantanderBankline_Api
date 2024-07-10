@@ -6,6 +6,7 @@ import com.dio.santander.Bankline.api.DTO.Login;
 import com.dio.santander.Bankline.api.DTO.LoginAcess;
 import com.dio.santander.Bankline.api.Entities.Corretista;
 import com.dio.santander.Bankline.api.Services.CorrentistaService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 
 @RestController

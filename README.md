@@ -61,3 +61,4 @@ Acesse o projeto front-end em: [front-end](https://github.com/hellyaxs/bankline-
 
 ## Arquitetura do projeto
 ![image](arquiterure.png)
+

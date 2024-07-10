@@ -43,6 +43,7 @@ services:
     ports:
       - "8080"
     environment:
+      - SPRING_PROFILES_ACTIVE=prod
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
@@ -72,7 +73,7 @@ services:
       - "8001:81"
     volumes:
       - ./docker/nginx.conf:/etc/nginx/nginx.conf
-      - ./front_end:/usr/share/nginx/html
+      - ./bankline-app/dist:/usr/share/nginx/html
     networks:
         - app_net
     depends_on:
