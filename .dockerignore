@@ -1,0 +1,10 @@
+kubernetes
+files
+.idea
+.vscode
+database.mv.db
+database.trace.db
+bankline-app
+
+Jenkinsfile
+arquiterure.png
