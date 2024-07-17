@@ -1,26 +1,48 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: $title$
+  namespace: app-bank
+  name: postgres
   labels:
-    app: $title$
+    app: postgres
 spec:
-  replicas: $1$
+  replicas: 1
   selector:
     matchLabels:
-      app: $title$
+      app: postgres
   template:
     metadata:
-      name: $title$
+      name: postgres
       labels:
-        app: $title$
+        app: postgres
     spec:
       containers:
-        - name: $title$
-          image: $nginx$
+        - name: postgres
+          image: postgres:latest
           imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: credentials-postgres
           ports:
-            - containerPort: $80$
-              protocol: $TCP$
+            - containerPort: 5432
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgres-db
       restartPolicy: Always
-      $END$
+      volumes:
+        - name: postgres-db
+          persistentVolumeClaim:
+            claimName: postgres-pvc
+---
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: app-bank
+  name: postgres-svc
+spec:
+  selector:
+    app: postgres
+  ports:
+    - port: 5432
+  type: ClusterIP

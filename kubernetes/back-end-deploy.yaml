@@ -6,7 +6,7 @@ metadata:
   labels:
     app: deploy-app-banck
 spec:
-  replicas: 10
+  replicas: 4
   selector:
     matchLabels:
       app: deploy-app-banck
@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: deploy-app-banck
-          image: santanader-bank:latest
+          image: santander-bank:latest
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:
