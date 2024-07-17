@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: app-bank
+  name: deploy-app-banck
+  labels:
+    app: deploy-app-banck
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: deploy-app-banck
+  template:
+    metadata:
+      name: deploy-app-banck
+      labels:
+        app: deploy-app-banck
+    spec:
+      containers:
+        - name: deploy-app-banck
+          image: santanader-bank:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: credentials-back-end
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+      restartPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: app-bank
+  name: svc-app-bank
+  labels:
+    app: svc-app-bank
+spec:
+  selector:
+    app: deploy-app-banck
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP

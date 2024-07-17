@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: app-bank
+  name: front-end
+  labels:
+    app: front-end
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: front-end
+  template:
+    metadata:
+      name: front-end
+      labels:
+        app: front-end
+    spec:
+      containers:
+        - name: front-end
+          image: bankline:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+              protocol: TCP
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: app-bank
+  name: front-end
+  labels:
+    app: front-end
+spec:
+  selector:
+    app: front-end
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+  type: LoadBalancer

@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   db:
     image: postgres:latest
@@ -17,44 +15,39 @@ services:
       retries: 5
     networks:
       - app_net
-  pgBouncer:
+
+  pgbouncer:
     image: edoburu/pgbouncer
     restart: always
-    ports:
-      - "6432:6432"
     environment:
       - DB_HOST=db
       - DB_PORT=5432
       - DB_USER=postgres
       - DB_PASSWORD=postgres
-      - ADMIN_USERS=postgres,admin
+      - DB_NAME=postgres
+      - LISTEN_PORT=5432
+      - AUTH_TYPE=scram-sha-256
+
     networks:
       - app_net
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -h localhost -p 5432" ]
-      interval: 30s
-      timeout: 10s
-      retries: 5
     depends_on:
       db:
         condition: service_healthy
+
   webapi_1:
     build: .
     ports:
       - "8080"
     environment:
       - SPRING_PROFILES_ACTIVE=prod
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://pgbouncer:5432/postgres
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     depends_on:
-      pgBouncer:
-        condition: service_healthy
       db:
         condition: service_healthy
     deploy:
-      replicas: 2
+      replicas: 1
       restart_policy:
         condition: any
     networks:
