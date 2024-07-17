@@ -1,14 +1,18 @@
 package com.dio.santander.Bankline.api.cnab.config;
 
+import com.dio.santander.Bankline.api.cnab.emuns.TipoTransacao;
 import com.dio.santander.Bankline.api.cnab.entities.Transation;
 import com.dio.santander.Bankline.api.cnab.entities.TransationCNAB;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
+import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 
 
+import org.springframework.batch.core.launch.support.TaskExecutorJobLauncher;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemProcessor;
@@ -21,10 +25,13 @@ import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.transform.Range;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
@@ -65,11 +72,11 @@ public class BatchConfig {
                 .writer(itemWriter)
                 .build();
     }
-
+    @StepScope
     @Bean
-    FlatFileItemReader<TransationCNAB> itemReader() {
+    FlatFileItemReader<TransationCNAB> itemReader(@Value("#{jobParameters['cnabfiles']}") Resource resource) {
         return new FlatFileItemReaderBuilder<TransationCNAB>().name("itemReader")
-                .resource(new FileSystemResource("files/CNAB.txt"))
+                .resource(resource)
                 .fixedLength()
                 .columns(
                         new Range(1, 1),new Range(2,9),
@@ -86,12 +93,13 @@ public class BatchConfig {
         return item -> {
             var data = new SimpleDateFormat("yyyyMMdd").parse(item.getData());
             var dataHora = new SimpleDateFormat("HHmmss").parse(item.getHora());
+             var tipoTrasacato = TipoTransacao.findByTipo(item.getTipo());
 
            return new Transation(
                     0L,
                     item.getTipo(),
                     new Date(data.getTime()),
-                    item.getValor().divide(BigDecimal.valueOf(100)),
+                    item.getValor().divide(BigDecimal.valueOf(100)).multiply(tipoTrasacato.getSinal()),
                     item.getCpf(),
                     item.getCartao(),
                     LocalTime.of(dataHora.getHours(),dataHora.getMinutes(),dataHora.getSeconds()),
@@ -113,6 +121,16 @@ public class BatchConfig {
                      """)
                 .beanMapped()
                 .build();
+    }
+
+
+    @Bean
+    public JobLauncher asyncJobLauncher(JobRepository jobRepository) throws Exception {  // processamento assincrono do job
+        var joblauncher = new TaskExecutorJobLauncher();
+        joblauncher.setJobRepository(jobRepository);
+        joblauncher.setTaskExecutor(new SimpleAsyncTaskExecutor());
+        joblauncher.afterPropertiesSet();
+        return joblauncher;
     }
 
 

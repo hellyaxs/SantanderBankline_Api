@@ -1,10 +1,9 @@
-package com.dio.santander.Bankline.api.cnab.Controller.exception;
+package com.dio.santander.Bankline.api.cnab.controller.exception;
 
 
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 

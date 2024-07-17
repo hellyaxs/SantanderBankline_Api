@@ -37,5 +37,6 @@ build/
 .vscode/
 .tool-versions
 .mvn/
+uploads/**
 
 database.mv.db
