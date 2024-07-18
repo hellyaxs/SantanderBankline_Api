@@ -34,7 +34,7 @@ Abaixo vou deixar as ferramentas e conhecimento adquiridos neste projeto:
 
 - docker
 - docker-compose
-- java 11
+- java 17
 
 ## Como executar a aplicação
 
@@ -44,7 +44,7 @@ Abaixo vou deixar as ferramentas e conhecimento adquiridos neste projeto:
 ```
 
 ```bash
-  docker-compose up -f ./docker --build  -d
+  docker-compose up --build  -d
 ```
 
 Acesse Front-end em: http://localhost:8001/
@@ -60,5 +60,5 @@ Acesse o projeto front-end em: [front-end](https://github.com/hellyaxs/bankline-
 
 
 ## Arquitetura do projeto
-![image](arquiterure.png)
+![image](arquitetura.png)
 
