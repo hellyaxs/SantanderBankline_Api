@@ -57,21 +57,30 @@ services:
     extends:
       service: webapi_1
 
+  frontend:
+    build: ./bankline-app
+    environment:
+      - API_URL=http://localhost:8080
+    networks:
+      - app_net
+    depends_on:
+      - webapi_1
+      - webapi_2
 
   nginx:
     image: nginx:latest
     restart: always
     ports:
       - "8000:80"
-      - "8001:81"
     volumes:
       - ./docker/nginx.conf:/etc/nginx/nginx.conf
-      - ./bankline-app/dist:/usr/share/nginx/html
+#      - ./bankline-app/dist:/usr/share/nginx/html
     networks:
         - app_net
     depends_on:
       - webapi_1
       - webapi_2
+      - frontend
 
 networks:
   app_net:

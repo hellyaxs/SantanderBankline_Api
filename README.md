@@ -47,7 +47,7 @@ Abaixo vou deixar as ferramentas e conhecimento adquiridos neste projeto:
   docker-compose up --build  -d
 ```
 
-Acesse Front-end em: http://localhost:8001/
+Acesse Front-end em: http://app.localhost:8000/
 
 Acesse API em: http://localhost:8000/
 
