@@ -7,8 +7,17 @@
     <groupId>com.bank</groupId>
     <artifactId>EliBank</artifactId>
     <version>1.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
 
-    <properties>
+	<modules>
+		<module>core</module>
+        <module>usecase</module>
+        <module>application</module>
+        <module>infrasctructure</module>
+    </modules>
+
+
+	<properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
