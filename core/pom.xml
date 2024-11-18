@@ -8,17 +8,14 @@
         <artifactId>EliBank</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-
     <artifactId>core</artifactId>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/io.projectreactor/reactor-core -->
         <dependency>
             <groupId>io.projectreactor</groupId>
             <artifactId>reactor-core</artifactId>
             <version>3.6.11</version>
         </dependency>
-
     </dependencies>
 
 
@@ -27,5 +24,6 @@
         <maven.compiler.target>22</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
 
 </project>
