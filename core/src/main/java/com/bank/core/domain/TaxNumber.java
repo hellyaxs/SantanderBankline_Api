@@ -18,12 +18,19 @@ public class TaxNumber {
     public Mono<Void> setValueReactive(String value) {
         return Mono.defer(() -> {
             try {
-                if (!isValid(value)) {
-                    return Mono.error(new TaxNumberException(ErrorCodeEnum.ON0001.getMessage(), ErrorCodeEnum.ON0001.getCode()));
-                }
+                isValid(value).subscribe((isValid) -> {
+                    if (!isValid) {
+                        try {
+                            throw new TaxNumberException(ErrorCodeEnum.ON0001.getMessage(), ErrorCodeEnum.ON0001.getCode());
+                        } catch (TaxNumberException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                });
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
+
             this.value = value;
             return Mono.empty();
         });
@@ -33,20 +40,20 @@ public class TaxNumber {
         return this.value;
     }
 
-    private Boolean isValid(String taxNumber) throws Exception {
+    private Mono<Boolean> isValid(String taxNumber) throws Exception {
 
         if (taxNumber.replaceAll("[^0-9]", "").length() == 11 || taxNumber.replaceAll("[^0-9]", "").length() == 14){
             if (taxNumber.length() == 11){
                 return isCpfValid(taxNumber);
             }else{
-                return isCnpjValid(taxNumber);
+                return Mono.just(isCnpjValid(taxNumber));
             }
         }else {
             throw new TaxNumberException(ErrorCodeEnum.ON0001.getMessage(), ErrorCodeEnum.ON0001.getCode());
         }
     }
 
-    private Boolean isCpfValid(String cpf) {
+    private Mono<Boolean> isCpfValid(String cpf) {
 
         int sum = 0;
         for (int i = 0; i < 9; i++) {
@@ -58,7 +65,7 @@ public class TaxNumber {
         }
 
         if (cpf.charAt(9) - '0' != firstDigit) {
-            return false;
+            return Mono.just(false);
         }
 
         sum = 0;
@@ -69,7 +76,7 @@ public class TaxNumber {
         if (secondDigit >= 10) {
             secondDigit = 0;
         }
-        return cpf.charAt(10) - '0' == secondDigit;
+        return Mono.just(cpf.charAt(10) - '0' == secondDigit);
     }
 
     private Boolean isCnpjValid(String cnpj) {
