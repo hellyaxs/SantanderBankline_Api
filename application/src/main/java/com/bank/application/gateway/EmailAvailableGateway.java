@@ -1,5 +1,7 @@
 package com.bank.application.gateway;
 
+import reactor.core.publisher.Mono;
+
 public interface EmailAvailableGateway {
-    Boolean emailAvailable(String email);
+    Mono<Boolean> emailAvailable(String email);
 }

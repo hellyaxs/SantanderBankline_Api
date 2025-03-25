@@ -1,5 +1,7 @@
 package com.bank.application.gateway;
 
+import reactor.core.publisher.Mono;
+
 public interface TaxNumberAvailableGateway {
-    Boolean  taxNumberAvailable(String taxNumber);
+    Mono<Boolean> taxNumberAvailable(String taxNumber);
 }
